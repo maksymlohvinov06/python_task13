@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Список користувачів</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background: #f4f4f9;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        background: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .user-card {
+        background: white;
+        padding: 15px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
+      .btn {
+        padding: 8px 15px;
+        text-decoration: none;
+        color: white;
+        background: #007bff;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Користувачі системи</h1>
+      <a href="/" class="btn">На головну</a>
+    </div>
+
+    {% for u in users %}
+    <div class="user-card">
+      <h3>{{ u.first_name }} {{ u.last_name }}</h3>
+      <p>Email: {{ u.email }}</p>
+      <p>Роль: {% if u.role == 1 %}Бібліотекар{% else %}Читач{% endif %}</p>
+      <a href="{% url 'user_detail' u.id %}">Дивитися профіль</a>
+    </div>
+    {% empty %}
+    <p>Користувачів не знайдено.</p>
+    {% endfor %}
+  </body>
+</html>

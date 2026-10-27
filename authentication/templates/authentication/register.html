@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Реєстрація</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background-color: #f4f4f9;
+      }
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      input,
+      select,
+      button {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      .error {
+        color: red;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Реєстрація</h2>
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST">
+        {% csrf_token %}
+        <label>Ім'я:</label>
+        <input type="text" name="first_name" required />
+
+        <div>
+          <label>Прізвище:</label>
+          <input type="text" name="last_name" required />
+
+          <label>По батькові:</label>
+            <input type="text" name="middle_name" required />
+        
+
+        <label>Email:</label>
+        <input type="email" name="email" required />
+
+        <label>Пароль:</label>
+        <input type="password" name="password" required />
+
+        <label>Роль:</label>
+        <select name="role">
+          <option value="0">Звичайний користувач (Гість)</option>
+          <option value="1">Бібліотекар</option>
+        </select>
+
+        <button type="submit">Зареєструватися</button>
+      </form>
+      <div style="text-align: center">
+        <a href="{% url 'login' %}">Вже є акаунт? Увійти</a>
+      </div>
+    </div>
+  </body>
+</html>

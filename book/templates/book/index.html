@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Головна - Бібліотека</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background-color: #f4f4f9;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .btn {
+        padding: 8px 15px;
+        text-decoration: none;
+        color: white;
+        background-color: #007bff;
+        border-radius: 3px;
+        margin-left: 10px;
+      }
+      .btn-danger {
+        background-color: #dc3545;
+      }
+      .book-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      .book-card {
+        background: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Наша Бібліотека</h1>
+      <div>
+        {% if user.is_authenticated %}
+        <span
+          >Привіт,
+          <strong>{{ user.first_name|default:user.email }}</strong>!</span
+        >
+        <a href="{% url 'user_list' %}" class="btn">Користувачі</a>
+        <a href="{% url 'author_list' %}" class="btn">Автори</a>
+        <a href="{% url 'order_list' %}" class="btn">Замовлення</a>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Вийти</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn">Увійти</a>
+        <a href="{% url 'register' %}" class="btn">Зареєструватися</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <form method="GET" action="{% url 'book_list' %}" style="margin-bottom: 20px;">
+    <input type="text" name="search" value="{{ search_query }}" placeholder="Поиск по названию..." style="padding: 8px; width: 300px; border-radius: 3px; border: 1px solid #ccc;">
+    <button type="submit" class="btn">Шукати</button>
+    <a href="{% url 'book_list' %}" class="btn btn-danger">Скинути</a>
+</form>
+
+    {% if books %}
+    <div class="books-container">
+        {% for book in books %}
+            <div class="book-card">
+                <h3>{{ book.name }}</h3>
+                <p>{{ book.description }}</p>
+                <p>Кількість: {{ book.count }}</p>
+                <a href="{% url 'book_detail' book.id %}">Подробнее</a>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>На жаль, книг поки що немає.</p>
+{% endif %}
+    </div>
+  </body>
+</html>

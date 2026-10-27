@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{ book.name }}</title>
+  </head>
+  <body>
+    <h1>{{ book.name }}</h1>
+    <p>Описание: {{ book.description }}</p>
+    <p>Осталось в наличии: {{ book.count }}</p>
+
+    <a href="/">Назад к списку книг</a>
+  </body>
+
+  <form method="POST" action="{% url 'create_order' book.id %}">
+    {% csrf_token %}
+    <button
+      type="submit"
+      class="btn"
+      style="padding: 10px; background: green; color: white"
+    >
+      Взяти книгу
+    </button>
+  </form>
+</html>
